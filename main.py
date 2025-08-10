@@ -13,19 +13,23 @@ def paint_single_tile():
 
 
 
-def paint_top_tiles():
+def paint_top_tiles_with_dividers():
     start_position = (16, 8)
-
-    paint_all_black_borders_around_three_collumns(start_position)
 
     paint_top_pattern_on_three_aside_collumns(start_position)
 
+    paint_all_black_borders_around_three_collumns(start_position)
+
     paint_area_with_color(start_position, 46, 7)
+
+    paint_y_axis_with_black((31, 19), (31, 31))
+
+    paint_y_axis_with_black((48, 19), (48, 31))
 
 def paint_middle_tiles():
     start_position = (16, 56)
 
-    paint_all_black_borders_around_three_collumns_minus_top(start_position)
+    paint_all_black_borders_minus_top_around_three_collumns(start_position)
 
     paint_top_pattern_on_three_aside_collumns(start_position)
 
@@ -34,13 +38,22 @@ def paint_middle_tiles():
 def paint_bottom_tiles():
     start_position = (16, 104)
 
-    paint_all_black_borders_around_three_collumns_minus_top(start_position)
+    paint_all_black_borders_minus_top_around_three_collumns(start_position)
 
     paint_top_pattern_on_three_aside_collumns(start_position)
 
     paint_horizontal_border_with_black_between_the_patterns(start_position, 3)
 
     paint_bottom_pattern_on_three_aside_collumns(start_position)
+
+def paint_top_tiles_without_dividers():
+    start_position = (64, 56)
+
+    paint_top_pattern_on_three_aside_collumns(start_position)
+
+    paint_all_black_borders_around_three_collumns(start_position)
+
+    paint_area_with_color(start_position, 46, 7)
 
 def paint_horizontal_line():
     start_position = (64, 8)
@@ -52,6 +65,36 @@ def paint_horizontal_line():
     paint_horizontal_border_with_black_between_the_patterns(start_position, 3)
 
     paint_bottom_pattern_on_three_aside_collumns(start_position)
+
+def paint_vertical_line_top():
+    start_position = (112, 8)
+
+    paint_top_pattern(start_position)
+
+    paint_area_with_color(start_position, 14, 7)
+
+    paint_all_black_borders_around_one_collumn(start_position)
+
+def paint_vertical_line_middle():
+    start_position = (112, 56)
+
+    paint_top_pattern(start_position)
+
+    paint_area_with_color(start_position, 14, 7)
+
+    paint_all_black_borders_minus_top_around_one_collumn(start_position)
+
+def paint_vertical_line_bottom():
+    start_position = (112, 104)
+
+    paint_top_pattern(start_position)
+
+    paint_bottom_pattern((start_position[0], start_position[1] + 12))
+
+    paint_horizontal_border_with_black_between_the_patterns(start_position, 1)
+
+    paint_all_black_borders_minus_top_around_one_collumn(start_position)
+
 
 
 
@@ -95,6 +138,7 @@ def paint_top_pattern_until_this_y(start_position, y_limit):
             image.putpixel(position_to_paint, pixel_copy)
 
 def paint_area_with_color(start_position, max_x, max_y):
+    print(start_position)
     start_position = (start_position[0] + 1, start_position[1] + 16)
     pixel_color_position = (start_position[0], start_position[1] - 1)
     color = image.getpixel(pixel_color_position)
@@ -122,10 +166,17 @@ def paint_all_black_borders_around_one_collumn(start_position):
     paint_vertical_border_with_black((start_position[0] + 15, start_position[1]))
     paint_horizontal_border_with_black((start_position[0], start_position[1] + 23), 1)
     paint_horizontal_border_with_black(start_position, 1)
-def paint_all_black_borders_around_three_collumns_minus_top(start_position):
+
+def paint_all_black_borders_minus_top_around_three_collumns(start_position):
     paint_vertical_border_with_black(start_position)
     paint_vertical_border_with_black((start_position[0] + 47, start_position[1]))
     paint_horizontal_border_with_black((start_position[0], start_position[1] + 23), 3)
+
+def paint_all_black_borders_minus_top_around_one_collumn(start_position):
+    paint_vertical_border_with_black(start_position)
+    paint_vertical_border_with_black((start_position[0] + 15, start_position[1]))
+    paint_horizontal_border_with_black((start_position[0], start_position[1] + 23), 1)
+
 def paint_top_pattern_on_three_aside_collumns(start_position):
     positions_to_paint_top_pattern = [(start_position[0] + 1, start_position[1]),
                                       (start_position[0] + 15, start_position[1]),
@@ -148,13 +199,21 @@ image = Image.open(imagem_path)
 
 paint_single_tile()
 
-paint_top_tiles()
+paint_top_tiles_with_dividers()
 
 paint_middle_tiles()
 
 paint_bottom_tiles()
 
+paint_top_tiles_without_dividers()
+
 paint_horizontal_line()
+
+paint_vertical_line_top()
+
+paint_vertical_line_middle()
+
+paint_vertical_line_bottom()
 
 image.save("Castle.png")
 
